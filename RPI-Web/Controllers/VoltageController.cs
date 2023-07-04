@@ -18,6 +18,7 @@ namespace RPI_Web.Controllers
         public VoltageController()
         {
             _service = new VoltageService();
+            SlackApi.Token = "xoxb-5539719593553-5529537940724-MFPuoz1xGaFGz0jguYwLk9mX";
         }
 
         [Route("")]
@@ -29,9 +30,18 @@ namespace RPI_Web.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public VoltageModel Get(int id)
+        public async Task<VoltageModel> GetAsync(int id)
         {
-            return _service.Get(id);
+            VoltageModel result = null;
+            result = _service.Get(id);
+            SlackApi.ChatPostMessage data = new SlackApi.ChatPostMessage()
+            {
+                channel = "#rpi",
+                text = $"#{id} voltage = {result.Value} "
+            };
+            await SlackApi.PostAsync(data);
+
+            return result;
         }
     }
 }

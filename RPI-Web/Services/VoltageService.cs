@@ -29,6 +29,11 @@ public class VoltageService
         if (fromDb.Any())
         {
             result = fromDb.FirstOrDefault();
+            
+            //fake ... 
+            result.Value = (new Random()).Next(110, 115);
+            result.CreateAt = DateTime.Now;
+                
         }
         
         return result;

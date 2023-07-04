@@ -1,7 +1,10 @@
+using RPI_Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHostedService<TimedHostedService>();
 
 var app = builder.Build();
 

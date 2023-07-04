@@ -20,6 +20,10 @@ namespace RPI_Web.Controllers
 
         public ModbusController()
         {
+            SlackApi.Token = "xoxb-5539719593553-5529537940724-gHXRhqzSogBjZIOG29zuJHuc";
+
+            
+            sp1 = new SerialPort();
             sp1.BaudRate = 19200;
             //sp1.PortName = "UART0";
             sp1.PortName = "/dev/ttyAMA0";
@@ -69,10 +73,16 @@ namespace RPI_Web.Controllers
             sp.Read(buffer, 0, bytes);
 
             Console.Write("Data Received:");
+            string msg = "";
             foreach (var buf in buffer)
             {
+                msg += $" {buf:X2}";
                 Console.Write($"{buf:X2}");
             }
+            
+            SlackApi.ChatPostMessage data = new SlackApi.ChatPostMessage() {channel = "#rpi", text = $"{msg}"};
+
+            SlackApi.PostAsync(data).Wait();
 
             Console.WriteLine("");
         }

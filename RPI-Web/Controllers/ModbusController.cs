@@ -21,7 +21,8 @@ namespace RPI_Web.Controllers
         public ModbusController()
         {
             sp1.BaudRate = 19200;
-            sp1.PortName = "UART0";
+            //sp1.PortName = "UART0";
+            sp1.PortName = "/dev/ttyAMA0";
             sp1.Parity = Parity.None;
             sp1.DataBits = 8;
             sp1.StopBits = StopBits.One;

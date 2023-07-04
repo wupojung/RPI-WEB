@@ -36,7 +36,6 @@ namespace RPI_Web.Controllers
         {
             sp1.Open();
 
-
             byte[] cmd = new byte[6];
 
             cmd[0] = 0x03;
@@ -55,6 +54,8 @@ namespace RPI_Web.Controllers
                 sp1.Write(package, 0, package.Length);
                 Thread.Sleep(2000);
             }
+            
+            sp1.Close();
             
             return "OK";
         }
